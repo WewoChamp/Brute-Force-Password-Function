@@ -3,6 +3,9 @@
 #include <limits>
 #include <cmath>
 
+const int UPPER = 126; //Upper limit of the ASCII characters
+const int LOWER = 32; //Lower limit of the ASCII characters
+
 using namespace std;
 
 //Brute Forcing Function To Try All Possible Passwords that are numOfChars long
@@ -10,12 +13,12 @@ string bruteForcer(int numOfChars){
     if(numOfChars == 0){
         return "";
     }else{
-        static int storage[100][2] = { [0 ... 99] = {31, 1} }; //Storage for the current character and trackers to see when to increment characters at the different positions in the password
-        if((storage[numOfChars - 1][0] /*The current character at that position*/ < 126) && (storage[numOfChars - 1][1]/*The tracker at that position to see if the character should be incremented*/ >= pow((126-31), (numOfChars-1)))){
+        static int storage[100][2] = { [0 ... 99] = {LOWER - 1, 1} }; //Storage for the current character and trackers to see when to increment characters at the different positions in the password
+        if((storage[numOfChars - 1][0] /*The current character at that position*/ < 126) && (storage[numOfChars - 1][1]/*The tracker at that position to see if the character should be incremented*/ >= pow((UPPER - (LOWER - 1)), (numOfChars-1)))){
             storage[numOfChars - 1][0]++;
             storage[numOfChars - 1][1] = 1;
-        }else if((storage[numOfChars - 1][0] >= 126) && (storage[numOfChars - 1][1] >= pow((126-31), (numOfChars-1)))){
-            storage[numOfChars - 1][0] = 32;
+        }else if((storage[numOfChars - 1][0] >= 126) && (storage[numOfChars - 1][1] >= pow((UPPER - (LOWER - 1)), (numOfChars-1)))){
+            storage[numOfChars - 1][0] = LOWER;
             storage[numOfChars - 1][1] = 1;
         }else{
             storage[numOfChars - 1][1]++;
