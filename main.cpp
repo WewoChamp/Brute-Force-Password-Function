@@ -10,11 +10,11 @@ string bruteForcer(int numOfChars){
     if(numOfChars == 0){
         return "";
     }else{
-        static int storage[100][2] = { [0 ... 99] = {32, 1} }; //Storage for the current character and trackers to see when to increment characters at the different positions in the password
-        if((storage[numOfChars - 1][0] /*The current character at that position*/ < 126) && (storage[numOfChars - 1][1]/*The tracker at that position to see if the character should be incremented*/ >= pow(126, (numOfChars-1)))){
+        static int storage[100][2] = { [0 ... 99] = {31, 1} }; //Storage for the current character and trackers to see when to increment characters at the different positions in the password
+        if((storage[numOfChars - 1][0] /*The current character at that position*/ < 126) && (storage[numOfChars - 1][1]/*The tracker at that position to see if the character should be incremented*/ > pow((126-31), (numOfChars-1)))){
             storage[numOfChars - 1][0]++;
             storage[numOfChars - 1][1] = 1;
-        }else if((storage[numOfChars - 1][0] >= 126) && (storage[numOfChars - 1][1] >= pow(126, (numOfChars-1)))){
+        }else if((storage[numOfChars - 1][0] >= 126) && (storage[numOfChars - 1][1] > pow((126-31), (numOfChars-1)))){
             storage[numOfChars - 1][0] = 32;
             storage[numOfChars - 1][1] = 1;
         }else{
@@ -73,7 +73,7 @@ int main(){
             }
         }else{
             ++tries; //Just to keep track of the number of tries could easily have been implemented in the bruteForcer function
-            trialPasswordString = bruteForcer(4); //Trying all possible 4 character passwords, everytime function is called it generates the next password trial
+            trialPasswordString = bruteForcer(3); //Trying all possible 4 character passwords, everytime function is called it generates the next password trial
             trialPassword = &trialPasswordString[0];
             cout << "Trying password: " << trialPasswordString << endl;
 
